@@ -222,7 +222,7 @@ impl Drop for MapEntitiesMapper<'_, '_> {
     fn drop(&mut self) {
         // WORKAROUND: We've already mapped, don't do it again.
         for mapped in self.map.values().copied().collect::<Vec<_>>() {
-            self.map.insert(mapped, mapped);
+            self.map.entry(mapped).or_insert(mapped);
         }
     }
 }
